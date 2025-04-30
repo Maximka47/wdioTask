@@ -1,5 +1,5 @@
 const { config } = require('./wdio.shared.conf');
-
+config.automationProtocol = 'webdriver',
 config.services = ['selenium-standalone'];
 config.capabilities = [{
     maxInstances: 1,
