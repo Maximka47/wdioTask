@@ -4,6 +4,7 @@ exports.config = {
     specs: [
         '../test/specs/**/*.js'
     ],
+    enforceWebDriverClassic: true,
     exclude: [],
     maxInstances: 6,
     logLevel: 'info',
