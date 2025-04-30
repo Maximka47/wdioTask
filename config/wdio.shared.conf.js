@@ -29,5 +29,10 @@ exports.config = {
     },
     before: function () {
         require('@babel/register');
+    },
+    after: async (result, capabilities, specs) => {
+        if (browser) {
+          await browser.deleteSession();
+        }
     }
 }
