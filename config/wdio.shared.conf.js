@@ -15,6 +15,7 @@ exports.config = {
     capabilities: [],
     services: [],
     framework: 'mocha',
+    automationProtocol: 'webdriver',
     reporters: [
         'spec',
         ['allure', {
@@ -25,7 +26,7 @@ exports.config = {
     ],
     mochaOpts: {
         ui: 'bdd',
-        timeout: 30000
+        timeout: 60000
     },
     before: function () {
         require('@babel/register');

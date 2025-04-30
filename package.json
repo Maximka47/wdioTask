@@ -24,8 +24,10 @@
     "allure-commandline": "^2.33.0",
     "chromedriver": "^135.0.3",
     "wdio": "^6.0.0",
-    "wdio-chromedriver-service": "^8.1.1"
+    "wdio-chromedriver-service": "^8.1.1",
+    "@babel/register": "7.27.1"
   },
   "dependencies": {
+
   }
 }
