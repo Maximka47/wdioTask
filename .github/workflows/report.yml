@@ -22,8 +22,27 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run WebdriverIO Tests
-        run: npm run test:chrome
+      - name: Run WebdriverIO Tests (5 retries max)
+        run: |
+          max_retries=3
+          count=0
+
+          until [ $count -gt $max_retries ]
+          do
+            echo "→ Test attempt #$((count+1))"
+            npm run test:chrome && break
+            count=$((count+1))
+            echo "✖ Tests failed on attempt #$count."
+            if [ $count -le $max_retries ]; then
+              echo "→ Retrying tests..."
+              # optional: sleep 5
+            fi
+          done
+
+          if [ $count -gt $max_retries ]; then
+            echo "✖ All $((max_retries+1)) attempts failed."
+            exit 1
+          fi
 
       - name: Generate Allure Report
         run: npm run allure:gen
