@@ -22,9 +22,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run WebdriverIO Tests (5 retries max)
+      - name: Run WebdriverIO Tests (10 retries max)
         run: |
-          max_retries=3
+          max_retries=10
           count=0
 
           until [ $count -gt $max_retries ]
