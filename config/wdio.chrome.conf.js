@@ -5,7 +5,11 @@ config.capabilities = [{
     maxInstances: 6,
     browserName: 'chrome',
     'goog:chromeOptions': {
-        args: ['--window-size=1280,800'],
+        args: [
+            '--headless',
+            '--disable-gpu',
+            '--window-size=1280,800',
+        ],
     },
 }];
 

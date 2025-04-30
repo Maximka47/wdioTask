@@ -23,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Run WebdriverIO Tests
-        run: npm run test:chrome
+        run: npm run test:headless
 
       - name: Generate Allure Report
         run: npm run allure:gen
