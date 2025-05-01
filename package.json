@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "wdio run config/wdio.shared.conf.js",
-    "test:chrome": "wdio run config/wdio.chrome.conf.js",
+    "test:chrome": "npx wdio run config/wdio.chrome.conf.js",
     "test:firefox": "wdio run ./config/wdio.firefox.conf.js",
     "test:headless": "wdio run config/wdio.chrome.conf.js --headless",
     "test:spec": "wdio run config/wdio.chrome.conf.js --spec",
@@ -14,6 +14,7 @@
   },
   "private": true,
   "devDependencies": {
+    "@babel/register": "7.27.1",
     "@wdio/allure-reporter": "^9.12.6",
     "@wdio/cli": "^9.12.7",
     "@wdio/firefox-profile-service": "^9.12.6",
@@ -23,11 +24,7 @@
     "@wdio/spec-reporter": "^9.12.6",
     "allure-commandline": "^2.33.0",
     "chromedriver": "^135.0.3",
-    "wdio": "^6.0.0",
     "wdio-chromedriver-service": "^8.1.1",
-    "@babel/register": "7.27.1"
-  },
-  "dependencies": {
-
+    "webdriverio": "^9.12.7"
   }
 }
