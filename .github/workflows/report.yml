@@ -1,4 +1,4 @@
-name: Run Tests and Deploy Allure Report
+name: Dockerized Tests & Allure Report
 
 on:
   push:
@@ -6,36 +6,38 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  pages: write
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
+      - name: Build Docker image
+        run: docker build -t wdio-project .
 
-      - name: Install dependencies
-        run: npm install --force
-
-      - name: Run WebdriverIO Tests (10 retries max)
+      - name: Run WebdriverIO tests in Docker (retry up to 10×)
         run: |
           max_retries=10
           count=0
 
-          until [ $count -gt $max_retries ]
-          do
+          until [ $count -gt $max_retries ]; do
             echo "→ Test attempt #$((count+1))"
-            npm run test:chrome && break
+            docker run --rm \
+              -v ${{ github.workspace }}:/app \
+              -v /app/node_modules \
+              wdio-project \
+              npm run test:headless && break
+
             count=$((count+1))
             echo "✖ Tests failed on attempt #$count."
             if [ $count -le $max_retries ]; then
-              echo "→ Retrying tests..."
-              # optional: sleep 5
+              echo "→ Retrying in 5s…"
+              sleep 5
             fi
           done
 
@@ -44,10 +46,15 @@ jobs:
             exit 1
           fi
 
-      - name: Generate Allure Report
-        run: npm run allure:gen
+      - name: Generate Allure Report in Docker
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/app \
+            -v /app/node_modules \
+            wdio-project \
+            npm run allure:gen
 
-      - name: Upload Allure Report artifact
+      - name: Upload Allure Report Artifact
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
@@ -57,14 +64,9 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download Allure Report artifact
         uses: actions/download-artifact@v4
