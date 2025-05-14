@@ -11,7 +11,7 @@ config.capabilities = [{
     browserName: 'chrome',
     'goog:chromeOptions': {
         args: [
-            '--headless',
+            // '--headless',
             '--no-sandbox',
             '--disable-gpu',
             '--disable-dev-shm-usage',

@@ -15,6 +15,7 @@
   "private": true,
   "devDependencies": {
     "@babel/register": "7.27.1",
+    "@faker-js/faker": "^9.7.0",
     "@wdio/allure-reporter": "^9.12.6",
     "@wdio/cli": "^9.12.7",
     "@wdio/firefox-profile-service": "^9.12.6",
