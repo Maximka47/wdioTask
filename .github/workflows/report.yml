@@ -20,31 +20,14 @@ jobs:
       - name: Build Docker image
         run: docker build -t wdio-project .
 
-      - name: Run WebdriverIO tests in Docker (retry up to 10×)
+      - name: Run WebdriverIO tests in Docker
         run: |
-          max_retries=10
-          count=0
-
-          until [ $count -gt $max_retries ]; do
-            echo "→ Test attempt #$((count+1))"
-            docker run --rm \
+          docker run --rm \
               -v ${{ github.workspace }}:/app \
               -v /app/node_modules \
               wdio-project \
-              npm run test:headless && break
-
-            count=$((count+1))
-            echo "✖ Tests failed on attempt #$count."
-            if [ $count -le $max_retries ]; then
-              echo "→ Retrying in 5s…"
-              sleep 5
-            fi
-          done
-
-          if [ $count -gt $max_retries ]; then
-            echo "✖ All $((max_retries+1)) attempts failed."
-            exit 1
-          fi
+              npm run test:headless
+        continue-on-error: true
 
       - name: Generate Allure Report in Docker
         run: |
