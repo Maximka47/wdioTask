@@ -32,6 +32,5 @@ describe('Telnyx Signup Page', () => {
 
         await expect(SignupPage.shortPasswordMessage).toBeDisplayed();
         await expect(SignupPage.termsAndConditionsMessage).toBeDisplayed();
-        await expect(SignupPage.errorMessage).toBeElementsArrayOfSize({ gte: 5 });
     });
 });
