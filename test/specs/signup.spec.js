@@ -22,7 +22,7 @@ describe('Telnyx Signup Page', () => {
         await expect(SignupPage.errorMessage).toBeElementsArrayOfSize({ gte: 5 });
     });
 
-    it('should give error messages when trying to submit invalid data', async () => {
+    it('should give all error messages when trying to submit invalid data', async () => {
         const invalid = generateInvalidFormData();
         await SignupPage.firstNameInput.setValue(invalid.name);
         await SignupPage.lastNameInput.setValue(invalid.name);
